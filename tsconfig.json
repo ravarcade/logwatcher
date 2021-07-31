@@ -1,0 +1,29 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"outDir": "out",
+		"lib": [
+			"es6"
+		],
+		"sourceMap": true,
+		"rootDir": "src",
+		"strict": true,
+		/* Additional Checks */
+		"noUnusedLocals": true,
+    	"noUnusedParameters": true,
+    	"noImplicitReturns": true,
+	    /* Experimental Options */
+	    "experimentalDecorators": true,
+	    "emitDecoratorMetadata": true,
+
+    	/* Advanced Options */
+    	// "skipLibCheck": true,
+    	"forceConsistentCasingInFileNames": true,
+	},
+	"exclude": [
+		"node_modules",
+		"webviews",
+		".vscode-test"
+	]
+}
