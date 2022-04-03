@@ -12,7 +12,8 @@
   ],
   "activationEvents": [
     "onCommand:logwatcher.helloWorld",
-    "workspaceContains:**/*.log"
+    "workspaceContains:**/*.log",
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -22,7 +23,7 @@
         "properties": {
           "conf.files.ext": {
             "type": "string",
-            "default": "log,txt",
+            "default": "out,k3.txt",
             "description": "Watched extensions",
             "scope": "resource"
           },
