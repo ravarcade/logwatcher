@@ -6,11 +6,6 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log(ext);
 	console.log('Congratulations, your extension "logwatcher" is now active!');
 
-	let disposable = vscode.commands.registerCommand('logwatcher.helloWorld', () => {
-		vscode.window.showInformationMessage('Hello World from logwatcher!');
-	});
-	context.subscriptions.push(disposable);
-	
 	filewatcher.activate(context);
 }
 
