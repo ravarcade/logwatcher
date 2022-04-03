@@ -86,7 +86,7 @@ function openOut()
 function openFile(filename: string, line: number, column: number  = 0) {
     var fileUri: vscode.Uri = vscode.Uri.file(filename);
     vscode.workspace.openTextDocument(fileUri).then((doc: vscode.TextDocument) => {
-        vscode.window.showTextDocument(doc).then(e => {
+        vscode.window.showTextDocument(doc).then(_e => {
             let activeEditor = vscode.window.activeTextEditor;
             if (activeEditor) {
                 const position = activeEditor.selection.active;
