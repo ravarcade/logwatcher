@@ -6,6 +6,7 @@ import * as vscode from 'vscode';
 import { log } from './logger';
 
 // ikony: https://microsoft.github.io/vscode-codicons/dist/codicon.html
+// https://stackoverflow.com/questions/34286515/how-to-install-visual-studio-code-extensions-from-command-line
 // https://github.com/microsoft/vscode/issues/146182
 
 let watcher: vscode.FileSystemWatcher;
@@ -32,7 +33,6 @@ export async function deactivate() {
 function setupConfigChange(context: vscode.ExtensionContext): void {
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
         if (e.affectsConfiguration('conf.files.ext') || e.affectsConfiguration('conf.files.pattern')) {
-            vscode.window.showInformationMessage("logWatcher restart");
             restartWatcher(context);
         }
     }));
@@ -103,9 +103,9 @@ function setupWatcherObjects(context: vscode.ExtensionContext): void {
         }
     });
 
-    watcher.onDidChange(uri => {
-        log("change: ", uri.fsPath);
-    });
+    // watcher.onDidChange(uri => {
+    //     log("change: ", uri.fsPath);
+    // });
     // fs.watch("C:/Work/tmp/log-wacher-tests", async (eventType, filename) => {
     //     log("\nThe file", filename, "was modified!");
     //     log("The type of change was:", eventType);

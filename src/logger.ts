@@ -35,6 +35,6 @@ export function log(...o: any) {
         logChannel.append('' + mapObject(args));
     });
     logChannel.appendLine('');
-    logChannel.show();
+    // logChannel.show();
 
 }
