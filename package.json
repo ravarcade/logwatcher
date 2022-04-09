@@ -3,7 +3,11 @@
   "displayName": "logwatcher",
   "description": "Waches files in log out dirs.",
   "publisher": "ravarcade",
-  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ravarcade/logwatcher"
+  },
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.58.0"
   },
@@ -26,15 +30,9 @@
             "description": "Watched extensions",
             "scope": "resource"
           },
-          "conf.trackedDir.where": {
+          "conf.files.pattern": {
             "type": "string",
-            "default": "./build",
-            "description": "Where we search for directory to watch ('./...' means we start from working dir)",
-            "scope": "resource"
-          },
-          "conf.trackedDir.pattern": {
-            "type": "string",
-            "default": "**/sctworkingdir/*/log/*-0",
+            "default": "**/sctworkingdir/*/logs/**/*",
             "description": "Pattern used to select watched dir",
             "scope": "resource"
           }
