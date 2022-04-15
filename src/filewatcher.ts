@@ -2,8 +2,8 @@
 
 import sanitize = require('sanitize-filename');
 import * as vscode from 'vscode';
-// import * as fs from 'fs';
 import { log } from './logger';
+import { selectFileToOpen } from './pickFile';
 
 // ikony: https://microsoft.github.io/vscode-codicons/dist/codicon.html
 // https://stackoverflow.com/questions/34286515/how-to-install-visual-studio-code-extensions-from-command-line
@@ -103,22 +103,14 @@ function setupWatcherObjects(context: vscode.ExtensionContext): void {
         }
     });
 
-    // watcher.onDidChange(uri => {
-    //     log("change: ", uri.fsPath);
-    // });
-    // fs.watch("C:/Work/tmp/log-wacher-tests", async (eventType, filename) => {
-    //     log("\nThe file", filename, "was modified!");
-    //     log("The type of change was:", eventType);
-    //     // log.append("\nThe file")
-    //     // log.append(filename);
-    //     // log.appendLine("was modified!");
-    //     // log.append("The type of change was:");
-    //     // log.append(eventType);
-    //   });
-
+    const cmdId = 'logwatcher.openResultDialog';
+    vscode.commands.registerCommand(cmdId, () => {
+        selectFileToOpen(files);
+    });
     statusBarMsg = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarMsg.text = `$(rocket) ${ext}`;
     statusBarMsg.tooltip = `Waiting for new files in: ${pat}`;
+    statusBarMsg.command = cmdId;
     statusBarMsg.show();
     context.subscriptions.push(statusBarMsg);
 }
@@ -130,14 +122,14 @@ function openLog(i: number) {
 }
 
 function updateStatusBar(i: number) {
-    statusBarMsg.hide();
-    if (files[i].length > 0) {
-        statusBars[i].tooltip = files[i];
-        statusBars[i].show();
-    }
-    else {
-        statusBars[i].hide();
-    }
+    // statusBarMsg.hide();
+    // if (files[i].length > 0) {
+    //     statusBars[i].tooltip = files[i];
+    //     statusBars[i].show();
+    // }
+    // else {
+    //     statusBars[i].hide();
+    // }
 }
 
 function getSlot(fileName: string): number | null {
