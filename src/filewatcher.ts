@@ -105,7 +105,7 @@ function setupWatcherObjects(context: vscode.ExtensionContext): void {
 
     const cmdId = 'logwatcher.openResultDialog';
     vscode.commands.registerCommand(cmdId, () => {
-        selectFileToOpen(files);
+        selectFileToOpen(exts, files);
     });
     statusBarMsg = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarMsg.text = `$(rocket) ${ext}`;
@@ -121,7 +121,7 @@ function openLog(i: number) {
     }
 }
 
-function updateStatusBar(i: number) {
+function updateStatusBar(_i: number) {
     // statusBarMsg.hide();
     // if (files[i].length > 0) {
     //     statusBars[i].tooltip = files[i];

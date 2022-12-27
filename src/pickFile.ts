@@ -1,23 +1,23 @@
 'use strict';
 
-import { Uri, window, workspace, TextDocument, Selection, QuickPickItem } from 'vscode';
+import { Uri, window, workspace, TextDocument, Selection/*, QuickPickItem*/ } from 'vscode';
 
 
-/**
- * A file opener using window.createQuickPick().
- * 
- * It shows how the list of items can be dynamically updated based on
- * the user's input in the filter field.
- */
-export async function selectFileToOpen(files: string[]) {
+export async function selectFileToOpen(exts: string[], files: string[]) {
     // let fnames = files.map((fullPath)=>{ return new QuickPickItem
     //     { label: 'User', description: fullPath.replace(/^.*[\\\/]/, ''), target: fullPath }} );
-
+    let mapToExt = files.reduce(function(result: Record<string, string>, field, index) {
+        result[field] = exts[index];
+        return result;
+      }, {});
 
     let i = 0;
     const result = await window.showQuickPick(
         files.map((fullPath: string)=>{ 
-            return { label: fullPath.replace(/^.*[\\\/]/, ''), detail: fullPath.replace(/^.*[\\\/]/, ''), target: fullPath }; 
+            return {
+                label: mapToExt[fullPath],
+                detail: fullPath.replace(/^.*[\\\/]/, ''),
+                target: fullPath }; 
         }),
 		{ placeHolder: 'eins, zwei or drei',
 		  onDidSelectItem: item => window.showInformationMessage(`Focus ${++i}: ${item}`)}

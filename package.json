@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/ravarcade/logwatcher"
   },
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.58.0"
   },
@@ -16,7 +16,10 @@
   ],
   "activationEvents": [
     "workspaceContains:**/sctworkingdir",
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:logwatcher.addHighlight",
+    "onCommand:logwatcher.removeHighlight",
+    "onCommand:logwatcher.clearHighlight"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -43,6 +46,18 @@
       {
         "command": "logwatcher.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "logwatcher.addHighlight",
+        "title": "rav: add highlight"
+      },
+      {
+        "command": "logwatcher.removeHighlight",
+        "title": "rav: remove highlight"
+      },
+      {
+        "command": "logwatcher.clearHighlight",
+        "title": "rav: clear highlight"
       }
     ]
   },
@@ -58,20 +73,20 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "14.x",
-    "@types/vscode": "^1.58.0",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
-    "eslint": "^7.27.0",
-    "glob": "^7.1.7",
-    "mocha": "^8.4.0",
-    "ts-loader": "^9.2.2",
-    "typescript": "^4.3.2",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.30.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
     "vscode-test": "^1.5.2",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "sanitize-filename": "^1.6.3"
