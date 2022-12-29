@@ -6,23 +6,26 @@ import { Uri, window, workspace, TextDocument, Selection/*, QuickPickItem*/ } fr
 export async function selectFileToOpen(exts: string[], files: string[]) {
     // let fnames = files.map((fullPath)=>{ return new QuickPickItem
     //     { label: 'User', description: fullPath.replace(/^.*[\\\/]/, ''), target: fullPath }} );
-    let mapToExt = files.reduce(function(result: Record<string, string>, field, index) {
-        result[field] = exts[index];
-        return result;
-      }, {});
+    // let mapToExt = files.reduce(function(result: Record<string, string>, field, index) {
+    //     result[field] = exts[index];
+    //     return result;
+    //   }, {});
 
-    let i = 0;
+    // let i = 0;
     const result = await window.showQuickPick(
-        files.map((fullPath: string)=>{ 
+        files.map((fullPath: string, index: number) => {
+            const detail = fullPath ? fullPath.replace(/^.*[\\\/]/, '') : " --- ";
             return {
-                label: mapToExt[fullPath],
-                detail: fullPath.replace(/^.*[\\\/]/, ''),
-                target: fullPath }; 
+                label: exts[index],
+                detail: detail,
+                target: fullPath
+            };
         }),
-		{ placeHolder: 'eins, zwei or drei',
-		  onDidSelectItem: item => window.showInformationMessage(`Focus ${++i}: ${item}`)}
-	);
-    if (result) { window.showInformationMessage(`Got: ${result.target}`); }
+        {
+            placeHolder: 'Select file',
+        }
+    );
+    if (result) { openFile(result.target,0); }
 }
 
 function openFile(filename: string, line: number, column: number = 0) {

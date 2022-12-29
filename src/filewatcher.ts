@@ -20,7 +20,6 @@ let commands: vscode.Disposable[];
 export async function activate(context: vscode.ExtensionContext) {
     log("Start watcher");
     setupWatcher(context);
-    setupConfigChange(context);
 }
 
 export async function deactivate() {
@@ -29,21 +28,7 @@ export async function deactivate() {
     }
 }
 
-// *** config change ***
-function setupConfigChange(context: vscode.ExtensionContext): void {
-    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
-        if (e.affectsConfiguration('conf.files.ext') || e.affectsConfiguration('conf.files.pattern')) {
-            restartWatcher(context);
-        }
-    }));
-}
-
-// *** watcher ***
-function setupWatcher(context: vscode.ExtensionContext): void {
-    setupWatcherObjects(context);
-}
-
-function restartWatcher(context: vscode.ExtensionContext): void {
+export function onDidChangeConfiguration(context: vscode.ExtensionContext): void {
     watcher.dispose();
     statusBarMsg.dispose();
 
@@ -54,6 +39,12 @@ function restartWatcher(context: vscode.ExtensionContext): void {
 
     setupWatcherObjects(context);
 }
+
+// *** watcher ***
+function setupWatcher(context: vscode.ExtensionContext): void {
+    setupWatcherObjects(context);
+}
+
 
 function setupWatcherObjects(context: vscode.ExtensionContext): void {
     let cfg = vscode.workspace.getConfiguration('', null);
@@ -86,21 +77,15 @@ function setupWatcherObjects(context: vscode.ExtensionContext): void {
 
     watcher = vscode.workspace.createFileSystemWatcher(fullWatchedPattern);
     watcher.onDidCreate(uri => {
-        log("create: ", uri.fsPath);
-        let i = getSlot(uri.fsPath);
-        if (i !== null) {
+        forEachMatchingExt(uri.fsPath, (i: number) => {
             files[i] = uri.fsPath;
-            updateStatusBar(i);
-        }
+        });
     });
 
     watcher.onDidDelete(uri => {
-        log("delete: ", uri.fsPath);
-        let i = getSlot(uri.fsPath);
-        if (i !== null) {
+        forEachMatchingExt(uri.fsPath, (i: number) => {
             files[i] = '';
-            updateStatusBar(i);
-        }
+        });
     });
 
     const cmdId = 'logwatcher.openResultDialog';
@@ -121,25 +106,12 @@ function openLog(i: number) {
     }
 }
 
-function updateStatusBar(_i: number) {
-    // statusBarMsg.hide();
-    // if (files[i].length > 0) {
-    //     statusBars[i].tooltip = files[i];
-    //     statusBars[i].show();
-    // }
-    // else {
-    //     statusBars[i].hide();
-    // }
-}
-
-function getSlot(fileName: string): number | null {
-    for (let i = 0; i < exts.length; ++i) {
-        if (fileName.endsWith(exts[i])) {
-            return i;
+function forEachMatchingExt(fileName: string, callback: (index: number) => void) {
+    exts.forEach((ext: string, index: number) => {
+        if (fileName.endsWith(ext)) {
+            callback(index);
         }
-    }
-
-    return null;
+    });
 }
 
 function openFile(filename: string, line: number, column: number = 0) {

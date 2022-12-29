@@ -9,7 +9,7 @@
   },
   "version": "0.0.4",
   "engines": {
-    "vscode": "^1.58.0"
+    "vscode": "^1.74.0"
   },
   "categories": [
     "Other"
@@ -29,7 +29,7 @@
         "properties": {
           "conf.files.ext": {
             "type": "string",
-            "default": "out,k3.txt",
+            "default": "out,k3.txt,sut.out",
             "description": "Watched extensions",
             "scope": "resource"
           },
@@ -37,6 +37,12 @@
             "type": "string",
             "default": "**/sctworkingdir/*/logs/**/*",
             "description": "Pattern used to select watched dir",
+            "scope": "resource"
+          },
+          "conf.mark.colors": {
+            "type": "string",
+            "default": "#437731,#3a4861a,#9d3c36,#7d5fa1,#618fb2",
+            "description": "Colors used to makr selected texts",
             "scope": "resource"
           }
         }
