@@ -4,14 +4,6 @@ import { Uri, window, workspace, TextDocument, Selection/*, QuickPickItem*/ } fr
 
 
 export async function selectFileToOpen(exts: string[], files: string[]) {
-    // let fnames = files.map((fullPath)=>{ return new QuickPickItem
-    //     { label: 'User', description: fullPath.replace(/^.*[\\\/]/, ''), target: fullPath }} );
-    // let mapToExt = files.reduce(function(result: Record<string, string>, field, index) {
-    //     result[field] = exts[index];
-    //     return result;
-    //   }, {});
-
-    // let i = 0;
     const result = await window.showQuickPick(
         files.map((fullPath: string, index: number) => {
             const detail = fullPath ? fullPath.replace(/^.*[\\\/]/, '') : " --- ";
